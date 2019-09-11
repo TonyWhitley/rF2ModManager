@@ -49,8 +49,11 @@ if RedirectedContent.IDLE exists
 """
 from pathlib import Path
 import psutil
+import sys
 from time import sleep
 from _winapi import CreateJunction
+
+from configIni import Config
 
 class rF2:
     rf2_pid = None          # Once we've found rF2 running
@@ -229,15 +232,28 @@ class Mod_manager():
             self.unselect_mods()
 
 def main():
-    rf2path = r'%ProgramFiles(x86)%\Steam\steamapps\common\rFactor 2'
+    _CONFIG_O = Config(sys.argv[1])
+    rf2path = _CONFIG_O.get_rfactor_folder()
     #rf2path = r'c:\Temp\dummyRf2'
     mm_o = Mod_manager(rf2path)
     if not mm_o:
         SystemExit(99)
+
+    for location in _CONFIG_O.get_locations():
+        if 1:# not mm_o.select_mod('Locations', location):
+            print(f'Locations {location} not found')
+
+    for vehicle in _CONFIG_O.get_vehicles():
+        if 1:# not mm_o.select_mod('Vehicles', vehicle):
+            print(f'Vehicles {vehicle} not found')
+
+    """
+    Live!
     if not mm_o.select_mod(('Locations', '60sHockenheim')):
         print('Locations 60sHockenheim not found')
     if not mm_o.select_mod(('Vehicles', 'Ferrari_312_67')):
         print('Vehicles Ferrari_312_67 not found')
+    """
 
     rf2_o = rF2()
 

@@ -1,0 +1,20 @@
+[Locations]
+3PA_Bathurst_2014
+Adelaide_Street_Circuit
+Barbagallo_v2.3
+BATHURST_2016_V3
+Phillip Island
+
+[Vehicles]
+AC_427SC_1967
+AC_Cobra_1954_Endurance
+Datsun Bluebird
+FLAT12_917k_1971
+Howston_DISS_1974
+Howston_G4_1967_Endurance
+Howston_G4_1968
+Howston_G6_1968
+Lola_T70_Spyder
+MAK-Corp_Group_C
+T70 MkIIIb
+ToyotaCelicaGTO_1986
