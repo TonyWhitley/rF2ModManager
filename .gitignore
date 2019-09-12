@@ -3,3 +3,6 @@ rF2ModManager.sln
 .vs/rF2ModManager/v16/TestStore/0/testlog.manifest
 .vs/rF2ModManager/v16/TestStore/0/000-0000.testlog
 /__pycache__
+/pathlib_plus/__pycache__
+/tests/__pycache__
+/pathlib_plus/tests/__pycache__

@@ -25,7 +25,27 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="configIni.py" />
+    <Compile Include="pathlib_plus\pathlib_plus.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pathlib_plus\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pathlib_plus\tests\test_pathlib_plus.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="rF2ModManager.py" />
+    <Compile Include="tests\test_Path.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_rF2ModManager.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="pathlib_plus\" />
+    <Folder Include="pathlib_plus\tests\" />
+    <Folder Include="tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

@@ -12,12 +12,11 @@ things are back as they were.
 Also have a repair function that moves everything back to Installed
 
 """
-from pathlib import Path
+from pathlib_plus.pathlib_plus import Path
 import psutil
 from subprocess import Popen, call
 import sys
 from time import sleep
-from _winapi import CreateJunction
 
 from configIni import Config
 
@@ -75,7 +74,7 @@ class rF2_check:
 
 class Mod_manager():
     def __init__(self, rf2path):
-        self.rf2dir = Path(rf2path).expanduser()
+        self.rf2dir = Path(rf2path).expandvars()
         self.content_store = self.rf2dir.joinpath('Userdata')\
             .joinpath('ContentStorage')
         self.installed = self.rf2dir.joinpath('Installed')
@@ -91,7 +90,7 @@ class Mod_manager():
         _cs_locations = self.content_store.joinpath('Locations')
         _cs_vehicles = self.content_store.joinpath('Vehicles')
         try:
-            self.content_store.mkdir(parents=False, exist_ok=True)
+            self.content_store.mkdir(parents=True, exist_ok=True)
         except FileNotFoundError:
             raise FileNotFoundError
         except FileExistsError:

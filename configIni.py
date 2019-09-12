@@ -14,14 +14,14 @@ class Config:
     def __init__(self, config_file_name):
         # instantiate
         self.config_file_name = config_file_name
-        self.config = ConfigParser(allow_no_value=True)
+        self.config = ConfigParser(interpolation=None, allow_no_value=True)
 
         # set default value(s)
         _section = RFACTOR_FOLDER_SECTION
         self.config.add_section(_section)
         self.config.set(_section,
                         'Path',
-                        r'c:\Program Files(x86)\Steam\steamapps\common\rFactor 2')
+                        r'%ProgramFiles(x86)%\Steam\steamapps\common\rFactor 2')
 
         # if there is an existing file parse values over those
         try:
