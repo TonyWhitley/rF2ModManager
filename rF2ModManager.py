@@ -142,43 +142,57 @@ class Mod_manager():
         """
         self.unselect_mods()
 
+class Mod_manager_app:
+    def cmd_line(self, config_file_name):
+        self._CONFIG_O = Config(config_file_name)
+        self._rf2path = Path(self._CONFIG_O.get_rfactor_folder()).expandvars()
+        #self._rf2path = r'c:\Temp\dummy Rf2'
+        self._mm_o = Mod_manager(self._rf2path)
+        if not self._mm_o:
+            SystemExit(99)
+        return Path(self._rf2path)    # for unit test
+
+    def wait_for_rf2_to_start(self):
+        self.rf2_o = rF2_check()
+
+        #call('"c:/Program Files(x86)/Steam/steam" -applaunch 365960')
+        print('\nWaiting for rFactor 2 to start...')
+
+        while not self.rf2_o.isRF2running():
+            sleep(.2)
+
+        print('\nrFactor 2 started')
+
+    def set_up(self):
+        self._mm_o.setup()
+        for location in self._CONFIG_O.get_locations():
+            if not self._mm_o.select_mod(('Locations', location)):
+                print(f'Locations {location} not found')
+
+        for vehicle in self._CONFIG_O.get_vehicles():
+            if not self._mm_o.select_mod(('Vehicles', vehicle)):
+                print(f'Vehicles {vehicle} not found')
+        # for unit test:
+        return(self._CONFIG_O.get_locations(), self._CONFIG_O.get_vehicles())
+
+    def wait_for_rf2_to_stop(self):
+        print('\nWaiting for rFactor 2 to stop...')
+        while self.rf2_o.isRF2running():
+            sleep(1)
+
+        print('\nrFactor 2 stopped')
+
+    def tear_down(self):
+        #self._mm_o.repair()
+        self._mm_o.unselect_mods()
+
 def main():
-    _CONFIG_O = Config(sys.argv[1])
-    rf2path = _CONFIG_O.get_rfactor_folder()
-    #rf2path = r'c:\Temp\dummy Rf2'
-    mm_o = Mod_manager(rf2path)
-    if not mm_o:
-        SystemExit(99)
-
-    rf2_o = rF2_check()
-
-    #call('"c:/Program Files(x86)/Steam/steam" -applaunch 365960')
-    print('\nWaiting for rFactor 2 to start...')
-
-    while not rf2_o.isRF2running():
-        sleep(.2)
-
-    print('\nrFactor 2 started')
-    mm_o.setup()
-    for location in _CONFIG_O.get_locations():
-        if not mm_o.select_mod(('Locations', location)):
-            print(f'Locations {location} not found')
-
-    for vehicle in _CONFIG_O.get_vehicles():
-        if not mm_o.select_mod(('Vehicles', vehicle)):
-            print(f'Vehicles {vehicle} not found')
-
-
-    print('\nWaiting for rFactor 2 to stop...')
-    while rf2_o.isRF2running():
-        sleep(1)
-
-    print('\nrFactor 2 stopped')
-
-    #mm_o.repair()
-    mm_o.unselect_mods()
-
-
+    mm_mgr_o = Mod_manager_app()
+    mm_mgr_o.cmd_line(sys.argv[1])
+    mm_mgr_o.wait_for_rf2_to_start()
+    mm_mgr_o.set_up()
+    mm_mgr_o.wait_for_rf2_to_stop()
+    mm_mgr_o.tear_down()
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,7 @@
 import unittest
 
 from test_Path import Test_test_Path
-from rF2ModManager import Mod_manager
+from rF2ModManager import Mod_manager, Mod_manager_app
 
 LOCATIONS = [
     '3PA_Bathurst_2014',
@@ -55,6 +55,29 @@ class Test_test_rF2ModManager(unittest.TestCase):
         self.test_mod_manager_select_mods()
         self.mm_o.unselect_mods()
         assert not self.test_path.content_store.exists(), self.content_store
+
+    def test_mod_manager_live(self):
+        mm_mgr_o = Mod_manager_app()
+        self._rf2path = mm_mgr_o.cmd_line('sample.modlist.txt')
+        installed = self._rf2path.joinpath('Installed')
+        # mm_mgr_o.wait_for_rf2_to_start()
+        locations, vehicles = mm_mgr_o.set_up()
+        for location in locations:
+            loc = installed.joinpath('Locations'). \
+                joinpath(location)
+            assert loc.exists(), loc
+        for vehicle in vehicles:
+            veh = installed.joinpath('Vehicles'). \
+                joinpath(vehicle)
+            assert veh.exists(), veh
+        content_store = self._rf2path.joinpath('Userdata')\
+            .joinpath('ContentStorage')
+        assert content_store.exists(), content_store
+
+        # mm_mgr_o.wait_for_rf2_to_stop()
+        mm_mgr_o.tear_down()
+        assert not content_store.exists(), content_store
+
 
 
 if __name__ == '__main__':
