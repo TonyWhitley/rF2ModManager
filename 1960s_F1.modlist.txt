@@ -1,0 +1,7 @@
+[rFactor folder]
+Path=%ProgramFiles(x86)%\Steam\steamapps\common\rFactor 2
+
+[Nested config files]
+UK.locations.txt 
+UK.historic.locations.txt
+1960s_F1.vehicles.txt 

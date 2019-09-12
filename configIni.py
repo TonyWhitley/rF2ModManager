@@ -2,6 +2,8 @@
 from configparser import ConfigParser
 
 RFACTOR_FOLDER_SECTION = 'rFactor folder'
+NESTED_CONFIG_FILES_SECTION = 'Nested config files'
+
 SECTIONS = [
     RFACTOR_FOLDER_SECTION,
     'Locations',
@@ -30,7 +32,32 @@ class Config:
         except Exception as e:
             print(f'Could not open "{config_file_name}"\n', e)
             self.config_file_name = 'NO CONFIG FILE'
-        pass
+            return
+
+        self._locations = []
+        if self.config.has_section('Locations'):
+            for _location in (self.config.options('Locations')):
+                self._locations.append(_location)
+        #except:
+        #    print(f'No Locations in {self.config_file_name}')
+
+        self._vehicles = []
+        if self.config.has_section('Vehicles'):
+            for _vehicle in (self.config.options('Vehicles')):
+                self._vehicles.append(_vehicle)
+        #except:
+        #    print(f'No Vehicles in {self.config_file_name}')
+
+        if self.config.has_section(NESTED_CONFIG_FILES_SECTION):
+            for _config_file in (self.config.options(NESTED_CONFIG_FILES_SECTION)):
+                _nested_config = Config(_config_file)
+                for _location in _nested_config.get_locations():
+                    self._locations.append(_location)
+                for _vehicle in _nested_config.get_vehicles():
+                    self._vehicles.append(_vehicle)
+        # de-dupe the lists
+        self._locations = list(set(self._locations))
+        self._vehicles = list(set(self._vehicles))
 
     def get(self, _section, _val):
         """ get a config value """
@@ -43,21 +70,9 @@ class Config:
     def get_rfactor_folder(self) -> str:
         return self.get(RFACTOR_FOLDER_SECTION, 'Path')
     def get_locations(self) -> list:
-        _locations = []
-        try:
-            for _location in (self.config.options('Locations')):
-                _locations.append(_location)
-        except:
-            print(f'No Locations in {self.config_file_name}')
-        return _locations
+        return self._locations
     def get_vehicles(self) -> list:
-        _vehicles = []
-        try:
-            for _location in (self.config.options('Vehicles')):
-                _vehicles.append(_location)
-        except:
-            print(f'No Vehicles in {self.config_file_name}')
-        return _vehicles
+        return self._vehicles
 
 
 if __name__ == "__main__":

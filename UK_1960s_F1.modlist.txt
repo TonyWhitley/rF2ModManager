@@ -1,0 +1,26 @@
+[rFactor folder]
+Path=%ProgramFiles(x86)%\Steam\steamapps\common\rFactor 2
+
+[Locations]
+BrandsACdx
+BrandsHatch
+Cadwell_Park_Circuit
+Castle_Combe_Circuit
+Croft Circuit
+DONINGTON 2013
+ISI_TigerMoth_2014
+Knockhill
+Oulton_Park_Circuit_2015
+sm_Donington_Park_v1.53
+sm_Snetterton_v1.02
+Thruxton
+
+
+[Vehicles]
+Brabham_1966
+Brabham_BT44_1975
+EVE_MATRA_F1
+Ferrari_312_67
+Historic Challenge_EVE_1968
+Historic Challenge_spark_1968
+McLaren M4B

@@ -12,7 +12,7 @@
     <Name>rF2ModManager</Name>
     <RootNamespace>rF2ModManager</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>sample.modlist.txt</CommandLineArguments>
+    <CommandLineArguments>UK_1960s_F1.modlist.txt</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -35,6 +35,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="rF2ModManager.py" />
+    <Compile Include="tests\test_configini.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_Path.py">
       <SubType>Code</SubType>
     </Compile>

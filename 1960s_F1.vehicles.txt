@@ -1,0 +1,8 @@
+[Vehicles]
+Brabham_1966
+Brabham_BT44_1975
+EVE_MATRA_F1
+Ferrari_312_67
+Historic Challenge_EVE_1968
+Historic Challenge_spark_1968
+McLaren M4B

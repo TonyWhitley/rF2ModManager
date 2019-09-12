@@ -74,9 +74,14 @@ class Test_test_rF2ModManager(unittest.TestCase):
             .joinpath('ContentStorage')
         assert content_store.exists(), content_store
 
-        # mm_mgr_o.wait_for_rf2_to_stop()
+        # mm_mgr_o.wait_for_rf2_to_exit()
         mm_mgr_o.tear_down()
         assert not content_store.exists(), content_store
+
+    def test_start_rf2_single_player(self):
+        mm_mgr_o = Mod_manager_app()
+        mm_mgr_o.cmd_line('sample.modlist.txt')
+        mm_mgr_o.start_rf2_single_player()
 
 
 

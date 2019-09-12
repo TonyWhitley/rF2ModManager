@@ -13,6 +13,7 @@ Also have a repair function that moves everything back to Installed
 
 """
 from pathlib_plus.pathlib_plus import Path
+import os
 import psutil
 from subprocess import Popen, call
 import sys
@@ -175,12 +176,22 @@ class Mod_manager_app:
         # for unit test:
         return(self._CONFIG_O.get_locations(), self._CONFIG_O.get_vehicles())
 
-    def wait_for_rf2_to_stop(self):
-        print('\nWaiting for rFactor 2 to stop...')
+    def start_rf2_single_player(self):
+        self.rf2_o = rF2_check()
+        _pop = os.getcwd()  # save current directory
+        os.chdir(self._rf2path)
+        cmd = '"' + str(self._rf2path) + \
+            r'\Bin64\rFactor2.exe"  +singleplayer +path="."'
+        print(cmd)
+        call(cmd) # actually, it doesn't return until rf2 exits
+        os.chdir(_pop)
+
+    def wait_for_rf2_to_exit(self):
+        print('\nWaiting for rFactor 2 to exit...')
         while self.rf2_o.isRF2running():
             sleep(1)
 
-        print('\nrFactor 2 stopped')
+        print('\nrFactor 2 exited')
 
     def tear_down(self):
         #self._mm_o.repair()
@@ -189,9 +200,10 @@ class Mod_manager_app:
 def main():
     mm_mgr_o = Mod_manager_app()
     mm_mgr_o.cmd_line(sys.argv[1])
-    mm_mgr_o.wait_for_rf2_to_start()
+    #mm_mgr_o.wait_for_rf2_to_start()
     mm_mgr_o.set_up()
-    mm_mgr_o.wait_for_rf2_to_stop()
+    mm_mgr_o.start_rf2_single_player()
+    mm_mgr_o.wait_for_rf2_to_exit()
     mm_mgr_o.tear_down()
 
 if __name__ == "__main__":
