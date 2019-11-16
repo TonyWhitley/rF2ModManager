@@ -99,13 +99,18 @@ class Mod_manager():
         except Exception as e:
             print(e)
             raise e
-        # Move Installed\Locations and Installed\Vehicles
-        # to Userdata\ContentStorage\Locations & Vehicles
-        _locations = self.installed.joinpath('Locations')
-        _vehicles = self.installed.joinpath('Vehicles')
-        _locations.rename(_cs_locations)
-        _vehicles.rename(_cs_vehicles)
-
+        if 0:
+            # Move Installed\Locations and Installed\Vehicles
+            # to Userdata\ContentStorage\Locations & Vehicles
+            _locations = self.installed.joinpath('Locations')
+            _vehicles = self.installed.joinpath('Vehicles')
+            _locations.rename(_cs_locations)
+            _vehicles.rename(_cs_vehicles)
+        else:
+            # Method 3: create Userdata\ContentStorage\Locations & Vehicles
+            # containing links to selected mods in Installed\Locations & Vehicles
+            _cs_locations.mkdir(parents=True, exist_ok=True)
+            _cs_vehicles.mkdir(parents=True, exist_ok=True)
 
     def select_mod(self, mod):
         """
@@ -116,11 +121,14 @@ class Mod_manager():
         _cs_path = self.content_store.joinpath(mod[0])
         _ins_mod = _ins_path.joinpath(mod[1])
         _cs_mod = _cs_path.joinpath(mod[1])
-        if not _cs_mod.is_dir():
-            return None
-        if not _ins_path.is_dir():
-            _ins_path.mkdir(parents=True, exist_ok=True)
-        _cs_mod.rename(_ins_mod)
+        if 0:
+            if not _cs_mod.is_dir():
+                return None
+            if not _ins_path.is_dir():
+                _ins_path.mkdir(parents=True, exist_ok=True)
+            _cs_mod.rename(_ins_mod)
+        else: # Method 3
+            _cs_mod.symlink_to(_ins_mod, junction=True)
         return mod
 
     def unselect_mods(self):

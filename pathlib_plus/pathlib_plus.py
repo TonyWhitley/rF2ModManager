@@ -35,7 +35,7 @@ class Path(_Path_):
         """ mysteriously not available in pathlib """
         return Path(expandvars(str(self)))
 
-    def symlink_to(self, src_path, dest_path, junction=False):
+    def symlink_to(self, target, target_is_directory=False, junction=False):
         """
         If junction and:
         * on Windows
@@ -43,10 +43,12 @@ class Path(_Path_):
         create a junction point, with the advantage that admin rights are
         not required
         """
-        if junction and os.name == 'nt' and dest_path.isdir():
-            CreateJunction(src_path, dest_path)
+        if junction and os.name == 'nt' and target.is_dir():
+            #CreateJunction(r'C:\Users\tony_\AppData\Local\Temp\test_pathlib_plus\source',
+            #               r'\tony\AppData\Local\Temp\test_pathlib_plus\target')
+            CreateJunction(str(self), str(target))
         else:
-            symlink_to(src_path, dest_path)
+            self.symlink_to(target, target_is_directory=target_is_directory)
 
     def walk(self):
         """

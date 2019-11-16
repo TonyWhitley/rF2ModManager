@@ -1,6 +1,6 @@
 import unittest
 
-from test_Path import Test_test_Path
+from .test_Path import Test_test_Path
 from rF2ModManager import Mod_manager, Mod_manager_app
 
 LOCATIONS = [

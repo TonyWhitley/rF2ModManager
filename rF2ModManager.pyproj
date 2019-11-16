@@ -14,6 +14,7 @@
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <CommandLineArguments>UK_1960s_F1.modlist.txt</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+    <TestFramework>unittest</TestFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +27,9 @@
   <ItemGroup>
     <Compile Include="configIni.py" />
     <Compile Include="pathlib_plus\pathlib_plus.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pathlib_plus\tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="pathlib_plus\__init__.py">
@@ -44,6 +48,7 @@
     <Compile Include="tests\test_rF2ModManager.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\__init__.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="pathlib_plus\" />
